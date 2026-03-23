@@ -90,3 +90,28 @@ Key design decisions:
     std::unordered_map<std::string, TokenBucket> buckets;
 
 
+6. Extending this Design by using the Rate limiting into the producer consumer problem
+
+    Use case: 
+        We have producers pushing tasks into a shared queue, and consumers pulling tasks. Before a consumer processes a task, we apply rate limiting. If the rate limit is exceeded, we drop the task instead of processing it.
+
+    Components:
+        Producer
+        Shared Queue (Buffer)
+        Consumer
+        RateLimiter (per consumer or global)
+
+
+    Flow:
+        Producer → Queue → Consumer → RateLimiter → Process / Drop
+
+
+    Design Decision:
+        Where to apply rate limiting ?
+         = Before consuming (pull-based control)
+
+         
+
+
+
+
