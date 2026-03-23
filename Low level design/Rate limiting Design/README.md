@@ -26,13 +26,13 @@ Non-Functional
 
 2. Main APIs to Expose
 
-class IRateLimiter {
-public:
-    virtual bool allowRequest(const std::string& key) = 0;
-    virtual int getRemainingQuota(const std::string& key) = 0;
-    virtual void reset(const std::string& key) = 0;
-    virtual ~IRateLimiter() = default;
-};
+        class IRateLimiter {
+        public:
+            virtual bool allowRequest(const std::string& key) = 0;
+            virtual int getRemainingQuota(const std::string& key) = 0;
+            virtual void reset(const std::string& key) = 0;
+            virtual ~IRateLimiter() = default;
+        };
 
 
 Key design decisions:
