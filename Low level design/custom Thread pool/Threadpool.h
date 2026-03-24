@@ -41,6 +41,11 @@ class CustomThreadPool
             }
         }
 
+        CustomThreadPool(const CustomThreadPool&) = delete;
+        CustomThreadPool& operator=(const CustomThreadPool&) = delete;
+        CustomThreadPool(CustomThreadPool&&) = delete;
+        CustomThreadPool& operator=(CustomThreadPool&&) = delete;
+        
         void OnSubMitTask(std::function<void()> tasks)
         {
             std::lock_guard<std::mutex> lock(mtx);
