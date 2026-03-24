@@ -19,9 +19,9 @@ Requirments:
 3. High Level Design
 
     Components:
-    1. Task queue (shared)
-    2. worker thread
-    3. Thread pool manager
+        1. Task queue (shared)
+        2. worker thread
+        3. Thread pool manager
 
 
     Flow:
