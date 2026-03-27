@@ -85,39 +85,39 @@
 6. Sequence Diagram
     1. PUT operation
 
-        Client        Coordinator     HashRing     ReplicationMgr     Node1     Node2     Node3
-            |                |              |              |              |         |         |
-            |--- PUT(k,v) -->|              |              |              |         |         |
-            |                |--- hash(k) ->|              |              |         |         |
-            |                |<-- nodes ----|              |              |         |         |
-            |                |---- replicas -------------> |              |         |         |
-            |                |                             |--- PUT ----->|         |         |
-            |                |                             |--- PUT ------------->  |         |
-            |                |                             |--- PUT ------------------------->|
-            |                |                             |<-- ACK ------|         |         |
-            |                |                             |<-- ACK ------------|  |         |
-            |                |                             |<-- ACK ----------------------|   |
-            |                |<--- quorum satisfied -------|              |         |         |
-            |<-- SUCCESS ----|              |              |              |         |         |
+            Client        Coordinator     HashRing     ReplicationMgr     Node1     Node2     Node3
+                |                |              |              |              |         |         |
+                |--- PUT(k,v) -->|              |              |              |         |         |
+                |                |--- hash(k) ->|              |              |         |         |
+                |                |<-- nodes ----|              |              |         |         |
+                |                |---- replicas -------------> |              |         |         |
+                |                |                             |--- PUT ----->|         |         |
+                |                |                             |--- PUT ------------->  |         |
+                |                |                             |--- PUT ------------------------->|
+                |                |                             |<-- ACK ------|         |         |
+                |                |                             |<-- ACK ------------|  |         |
+                |                |                             |<-- ACK ----------------------|   |
+                |                |<--- quorum satisfied -------|              |         |         |
+                |<-- SUCCESS ----|              |              |              |         |         |
 
 
     2. Get Operation:
 
-        Client        Coordinator     HashRing     ReplicationMgr     Node1     Node2     Node3
-            |                |              |              |              |         |         |
-            |--- GET(k) ---->|              |              |              |         |         |
-            |                |--- hash(k) ->|              |              |         |         |
-            |                |<-- nodes ----|              |              |         |         |
-            |                |---- replicas -------------> |              |         |         |
-            |                |                             |--- GET ----->|         |         |
-            |                |                             |--- GET ------------->  |         |
-            |                |                             |--- GET ------------------------->|
-            |                |                             |<-- value ---|         |         |
-            |                |                             |<-- value -----------| |         |
-            |                |                             |<-- value ---------------------| |
-            |                |<--- responses --------------|              |         |         |
-            |                |--- resolve latest version --|              |         |         |
-            |<-- VALUE ------|              |              |              |         |         |
+            Client        Coordinator     HashRing     ReplicationMgr     Node1     Node2     Node3
+                |                |              |              |              |         |         |
+                |--- GET(k) ---->|              |              |              |         |         |
+                |                |--- hash(k) ->|              |              |         |         |
+                |                |<-- nodes ----|              |              |         |         |
+                |                |---- replicas -------------> |              |         |         |
+                |                |                             |--- GET ----->|         |         |
+                |                |                             |--- GET ------------->  |         |
+                |                |                             |--- GET ------------------------->|
+                |                |                             |<-- value ---|         |         |
+                |                |                             |<-- value -----------| |         |
+                |                |                             |<-- value ---------------------| |
+                |                |<--- responses --------------|              |         |         |
+                |                |--- resolve latest version --|              |         |         |
+                |<-- VALUE ------|              |              |              |         |         |
 
 
 7. Performance matrices:
