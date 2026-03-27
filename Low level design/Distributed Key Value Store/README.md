@@ -81,3 +81,59 @@
         Replication Manager → replication logic
 
         Storage Nodes → actual data
+
+6. Sequence Diagram
+    1. PUT operation
+
+        Client        Coordinator     HashRing     ReplicationMgr     Node1     Node2     Node3
+            |                |              |              |              |         |         |
+            |--- PUT(k,v) -->|              |              |              |         |         |
+            |                |--- hash(k) ->|              |              |         |         |
+            |                |<-- nodes ----|              |              |         |         |
+            |                |---- replicas -------------> |              |         |         |
+            |                |                             |--- PUT ----->|         |         |
+            |                |                             |--- PUT ------------->  |         |
+            |                |                             |--- PUT ------------------------->|
+            |                |                             |<-- ACK ------|         |         |
+            |                |                             |<-- ACK ------------|  |         |
+            |                |                             |<-- ACK ----------------------|   |
+            |                |<--- quorum satisfied -------|              |         |         |
+            |<-- SUCCESS ----|              |              |              |         |         |
+
+
+    2. Get Operation:
+
+        Client        Coordinator     HashRing     ReplicationMgr     Node1     Node2     Node3
+            |                |              |              |              |         |         |
+            |--- GET(k) ---->|              |              |              |         |         |
+            |                |--- hash(k) ->|              |              |         |         |
+            |                |<-- nodes ----|              |              |         |         |
+            |                |---- replicas -------------> |              |         |         |
+            |                |                             |--- GET ----->|         |         |
+            |                |                             |--- GET ------------->  |         |
+            |                |                             |--- GET ------------------------->|
+            |                |                             |<-- value ---|         |         |
+            |                |                             |<-- value -----------| |         |
+            |                |                             |<-- value ---------------------| |
+            |                |<--- responses --------------|              |         |         |
+            |                |--- resolve latest version --|              |         |         |
+            |<-- VALUE ------|              |              |              |         |         |
+
+
+7. Performance matrices:
+
+    | Metric            | Description         | Expected                        |
+    | ----------------- | ------------------- | ------------------------------- |
+    | Read Latency      | Time to fetch value | O(R network calls)              |
+    | Write Latency     | Time to persist     | O(W network calls)              |
+    | Throughput        | Requests/sec        | High (horizontal scaling)       |
+    | Availability      | System uptime       | High (replication)              |
+    | Consistency       | Data correctness    | Tunable (R + W vs N)            |
+    | Scalability       | Add nodes           | Linear scaling                  |
+    | Fault Tolerance   | Node failures       | Tolerates N - W failures        |
+    | Load Distribution | Across nodes        | Balanced via consistent hashing |
+
+
+Key Formula:
+    R + W > N  → Strong consistency
+    R + W <= N → Eventual consistency
