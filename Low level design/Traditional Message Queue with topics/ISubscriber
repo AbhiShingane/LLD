@@ -1,0 +1,13 @@
+#include<iostream>
+#include<string>
+#include<Event.h>
+#include<functional>
+
+class ISubscriber
+{
+    public:
+    virtual void OnEvent(const Event &event) = 0;
+    virtual std::string getId() = 0;
+    ~ISubscriber() = default;
+};
+

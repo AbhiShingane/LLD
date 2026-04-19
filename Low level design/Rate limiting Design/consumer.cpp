@@ -2,17 +2,18 @@
 #include <Task.h>
 #include <BlockingQueue.h>
 #include <Ratelimiter.h>
+#include <IRateLimiter.h>
 
 using namespace std; 
 
 class consumer
 {
     BlockingQueue<Task> &queue;
-    RateLimitar &ratelimit;
+    shared_ptr<IRateLimitar> ratelimit;
     std::string consumerId;
 
     public:
-    consumer(BlockingQueue<Task> &q, RateLimitar &rl, const string id) : queue(q), ratelimit(rl), consumerId(id){}
+    consumer(BlockingQueue<Task> &q, shared_ptr<IRateLimitar> rl, const string id) : queue(q), ratelimit(rl), consumerId(id){}
 
     void consume()
     {
@@ -22,7 +23,7 @@ class consumer
         {
             Task task = queue.pop();
 
-            if(!ratelimit.allowrequest(consumerId))
+            if(!ratelimit->allowrequest(consumerId))
             {
                 cout<<"rate limit exhausted: "<<endl;
                 continue;

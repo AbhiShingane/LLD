@@ -91,7 +91,7 @@ class WorkStealThreadPool
     {
         auto& work = workerqueue[id];
 
-        std::unique_lock<std::mutex> lock(mtx);
+        std::unique_lock<std::mutex> lock(work.mtx);
         if(!work.dq.empty())
         { 
             task = std::move(work.dq.back());

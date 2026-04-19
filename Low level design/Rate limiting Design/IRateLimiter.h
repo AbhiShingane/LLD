@@ -7,3 +7,5 @@ class IRateLimitar
     virtual double getRemainingQuotaofTokens(const std::string key) = 0;
     virtual void reset(const std::string& key) = 0;
 };
+
+
