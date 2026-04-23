@@ -12,7 +12,8 @@ class Publisher
 {
     //std::priority_queue<std::pair<int, News>> pq;
     std::vector<std::pair<int, News>> newsStore;
-    int newsCounter; 
+    int newsCounter;
+    std::mutex mtx; 
 
     public:
     Publisher():newsCounter(1){};
@@ -29,7 +30,7 @@ class Publisher
     {
         //publishing the news
         News n1("abc", "abc", "abc", 2);
-        
+        std::lock_guard<std::mutex> lock(mtx);
         //adding into the storage
         //pq.push({newsCounter++, n1});
         newsStore.insert(newsStore.begin(), {newsCounter++, n1});
@@ -39,6 +40,7 @@ class Publisher
     std::vector<News> getAllNewsForPublisher()
     {
         std::vector<News> newslist;
+        std::lock_guard<std::mutex> lock(mtx);
         for(auto it = newsStore.begin(); it != newsStore.end(); ++it)
         {
              newslist.push_back(it->second);
@@ -51,7 +53,7 @@ class Publisher
     std::vector<News> getXNewsForPublisher(int x)
     {
         std::vector<News> newslist;
-
+        std::lock_guard<std::mutex> lock(mtx);
         for(auto it = newsStore.begin(); it != newsStore.end(), x-- > 0; ++it)
         {
             newslist.push_back(it->second);

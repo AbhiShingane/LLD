@@ -68,7 +68,9 @@ class ConsistentHashing
 
         size_t h = gethash(key);
 
-       auto it = std::lower_bound(key);
+       auto it = ring.lower_bound(h);
+
+        
 
         while(result.size() < count)
         {

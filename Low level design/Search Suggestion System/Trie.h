@@ -104,6 +104,13 @@ class Trie
 
         doDFS(prefixEnd, heap, topK);
 
+        while(!heap.empty())
+        {
+            result.push_back(heap.top());
+            heap.pop();
+        }
+
+        std::reverse(result.begin(), result.end());
         return result;
     }
 

@@ -34,7 +34,7 @@ class Coordinator
 
         for(auto replica: replicas)
         {
-            replica->put(key, value);
+            replica->put(key, value, version);
             success++;
         }
 

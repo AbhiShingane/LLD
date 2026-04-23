@@ -54,33 +54,45 @@ class Subscriber
     }
 
 
+    std::vector<News> GetAllNewsFromPublisher(int x)
+    {
+        std::vector<News> newslist;
+        std::vector<News> news;
+        for(int i=0; i<publist.size(); i++)
+        {
+            newslist.begin()
+        }
+
+        return
+    }
+
+
     std::vector<News> GetXNewsForAllPublisher(int x)
     {
         std::vector<News> newslist;
         std::vector<News> news;
+        std::priority_queue<std::pair<string, News>, std::vector<std::pair<string, News>>, std::greater<std::pair<string, News>>> pq;
         for(int i=0; i<publist.size(); i++)
         {
-            news = publist[i].getXNewsForPublisher(x);
-            newslist.insert(newslist.end(), news.begin(), news.end());
-            news.clear();
+            newslist = publist[i].getAllNewsForPublisher();
+            for(int i=0; i<newslist.size(); i++)
+            {
+                pq.push({newslist[i].newsId, newslist[i]});
+                if(pq.size() > x)
+                {
+                    pq.pop();
+                }
+            }
+
         }
 
-        return newslist;
-    }
-
-
-    std::vector<News> GetAllNewsForAllPublisher()
-    {
-        std::vector<News> newslist;
-        std::vector<News> news;
-        for(int i=0; i<publist.size(); i++)
+        while(!pq.empty())
         {
-            news = publist[i].getAllNewsForPublisher();
-            newslist.insert(newslist.end(), news.begin(), news.end());
-            news.clear();
+            news.push_back(pq.top().second);
+            pq.pop();
         }
-
-        return newslist;
+        
+        return news;
     }
 
 };
