@@ -20,7 +20,7 @@ class Product
 
     double getperunitPrice() { return unit_price;}
 
-    int getAvailableStock() {return stock;}
+    int getAvailableStock() {return stock;} // This will come under the inventery
 
     string getCategoary() {return categoary;}
 
